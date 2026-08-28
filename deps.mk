@@ -129,7 +129,7 @@ endif
 ifeq (true,$(DISABLE_CACHE))
 no-cache := --no-cache
 no-cache-dir := --no-cache-dir
-bundle-update-all := --all
+bundle-force := --force
 endif
 
 ## Python
@@ -245,7 +245,7 @@ Gemfile.lock: Gemfile
 	@touch $@
 
 update-deps:: Gemfile
-	$(bundle-path-override-lib) bundle update $(bundle-update-all) \
+	$(bundle-path-override-lib) bundle update --all $(bundle-force) \
 	  --gemfile="$(call safe-realpath,$<)"
 
 clean-deps::
@@ -261,7 +261,7 @@ $(LIBDIR)/Gemfile.lock: $(LIBDIR)/Gemfile
 	@touch $@
 
 update-deps:: $(LIBDIR)/Gemfile
-	$(bundle-path-override) bundle update $(bundle-update-all) \
+	$(bundle-path-override) bundle update --all $(bundle-force) \
 	  --gemfile="$(call safe-realpath,$<)"
 
 clean-deps::
