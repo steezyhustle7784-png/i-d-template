@@ -84,6 +84,8 @@ NOT_CURRENT = $(filter-out $(basename $<),$(drafts))
 MD_PRE += | sed -e '$(join $(addprefix s/,$(addsuffix -latest/,$(NOT_CURRENT))), \
 		$(addsuffix /g;,$(NOT_CURRENT)))'
 endif
+TODAY := $(shell date '+%F')
+MD_PRE += | sed -e '$(addprefix s/,$(addsuffix -date/$(TODAY)/g;,$(drafts)))'
 MD_POST = | $(trace) -q $@ -s venue $(python) $(LIBDIR)/add-note.py
 ifneq (true,$(USE_XSLT))
 MD_POST += | $(trace) -q $@ -s v2v3 $(xml2rfc) --v2v3 /dev/stdin -o /dev/stdout
